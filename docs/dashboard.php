@@ -1,13 +1,30 @@
 <?php 
          include "coon.php"; 
       
-         
+         session_start();
+
+         if(!isset($_SESSION["login"]) &&  !isset($_SESSION["senha"])  )
+            {
+                 header("Location: index.html");
+                  exit;
+            }
 ?>
 
 
 <!DOCTYPE html>
 <html lang="en">
   <head>
+
+
+  <script language="Javascript">
+function confirmacao(id) {
+     var resposta = confirm("Deseja remover esse registro?");
+ 
+     if (resposta == true) {
+          window.location.href = "deletar.php?id="+id;
+     }
+}
+</script>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
@@ -96,24 +113,32 @@
     <header class="app-header"><a class="app-header__logo" href="dashboard.php">Serede</a>
       <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
       <!-- Navbar Right Menu-->
+      
       <ul class="app-nav">
        
         <!--Notification Menu-->
        
         <!-- User Menu-->
+        <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Open Profile Menu"><i class="fa fa-user fa-lg"></i></a>
+          <ul class="dropdown-menu settings-menu dropdown-menu-right">
+            
+            <li><a class="dropdown-item" href="logout.php"><i class="fa fa-sign-out fa-lg"></i> Logout</a></li>
+          </ul>
+        </li>
         
       </ul>
     </header>
-    <!-- Sidebar menu-->
+    <!-- Sidebar menu -->
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <aside class="app-sidebar">
       <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" style="width:38px; height:40px;" src="img/serede.jpg" alt="User Image">
+      
         <div>
           
         </div>
       </div>
       <ul class="app-menu">
-        <li><a class="app-menu__item active" href="index.php"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
+        <li><a class="app-menu__item active" href="dashboard.php"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
         
           <ul class="treeview-menu">
             <li><a class="treeview-item" href="bootstrap-components.html"><i class="icon fa fa-circle-o"></i> Bootstrap Elements</a></li>
@@ -127,8 +152,9 @@
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-th-list"></i><span class="app-menu__label">Menu</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
            
-            <li><a class="treeview-item" href="http://10.141.75.55/dgo/"><i class="icon fa fa-circle-o"></i> Dgo (rede OI)</a></li>
-            <li><a class="treeview-item" href="http://187.54.30.83/dgo"><i class="icon fa fa-circle-o"></i> Dgo (rede externa)</a></li>
+            
+            <li><a class="treeview-item" href="http://187.54.30.83/dgo"><i class="icon fa fa-circle-o"></i> Dgo </a></li>
+            <li><a class="treeview-item" href="cadastro.php"><i class="icon fa fa-circle-o"></i> Cadastro </a></li>
             
            
           </ul>
@@ -155,7 +181,7 @@
           
             <div class="table-responsive">
             <div class="col-md-4">
-            <form class="form" role="form"   method="POST" action="index.php" style="margin-left:10%;">
+            <form class="form" role="form"   method="POST" action="dashboard.php" style="margin-left:10%;">
     
          <div class="form-group" >  
                         <label for="email" >ANUF:</label> <br>
@@ -210,16 +236,26 @@ $trecho = $_POST['trecho'];
       
         {
      
-      
+          $id = $dado['id'];
+          $rota = $dado['rota'];
 
-      ?>
-             <iframe src="<?php echo $dado['rota'] ?>" width="100%" height="480"></iframe>    
+      ?>     
+             
+
+             <?php } ?> 
       <?php 
                       
       } 
+
+      
          
-    } }?>
-                
+    ?>
+         <iframe src="<?php echo $rota ?>" width="100%" height="480"></iframe>  
+             <?php if( $_SESSION['acesso'] == "ADM") { ?>
+             <a href="javascript:func()"
+             onclick="confirmacao('<?php echo $id;?>')" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Deletar</a> 
+             <a href="editar.php?id=<?php echo $id;?>"
+             class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Editar</a>   <?php    } }?>   
             </div>
           </div>
         </div>

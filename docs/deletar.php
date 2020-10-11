@@ -1,5 +1,6 @@
-<?php  include "coon.php";  
 
+<?php
+include "coon.php";
 
 
 session_start();
@@ -11,33 +12,22 @@ session_start();
             }
 
 
-
-
-
 ?>
-
-
-
-
-
-
-
-
 
 
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
-<link href="css/style.css" rel="stylesheet">
-<link rel="icon" href="img/icon.ico">
+
+<link rel="icon" href="img/logo_oi.ico">
 
 <script type="text/javascript">
 function saidasuccessfully()
 {
-	setTimeout("window.location='cadastro.php'",3000);
-	
-	
+  setTimeout("window.location='index.php'",3000);
+  
+  
 }
 </script> 
 
@@ -48,9 +38,9 @@ function saidasuccessfully()
 
 <meta charset="UTF-8"/>
 
-<title>ROTAS</title>
+<title>KMZ</title>
 
-
+<link rel="icon" href="img/icon.ico">
 </head>
 
 
@@ -66,15 +56,7 @@ function saidasuccessfully()
 
 <?php
 
-
-
-$anuf =$_POST['anuf'];
-$trecho =$_POST['trecho']; 
-$rota =$_POST['rota'];
-
-$query = "insert into rota (anuf,trecho,rota)";
-
-$query.= "values ('$anuf','$trecho','$rota')";
+$id =$_GET['id'];
 
 
 
@@ -84,6 +66,8 @@ $query.= "values ('$anuf','$trecho','$rota')";
 
 
 
+
+$query = "delete from rota where id = '$id'";
 
 
 
@@ -93,21 +77,15 @@ $query.= "values ('$anuf','$trecho','$rota')";
 $sql = mysql_query($query);
 
 
-
-if($sql)
+if($sql )
 {
   
   
-  echo "
-  <script language='JavaScript'>
-  window.alert('CADASTRADO COM SUCESSO!')
+    echo ' <h2>DELETADA COM SUCESSO!'.$n_rat;
   
-  </script>";
-
   echo "<script>saidasuccessfully()</script>";
-  
 
- ;
+ 
   
 
   
@@ -115,18 +93,14 @@ if($sql)
 else
 {
   
-  echo "<script language='JavaScript'>
-   window.alert('ERRO NO CADASTRO!');
-   </script> " ;
+  echo "<h2>Erro !</h2> ";
   
 }
 
 
 
 
-
-
-
+ 
 
 ?>
 
